@@ -11,7 +11,7 @@ import SwiftUI
 struct SwiftUIWeatherCloneApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WeatherSearchVC()
         }
     }
 }

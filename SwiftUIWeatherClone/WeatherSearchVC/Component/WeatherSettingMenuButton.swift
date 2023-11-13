@@ -8,27 +8,56 @@
 import SwiftUI
 
 struct WeatherSettingMenuButton: View {
+    enum TempType: String, CaseIterable, Identifiable {
+        var id: Self { return self }
+        
+        case Celsius = "섭씨"
+        case Fahrenheit = "화씨"
+        
+        var image: ImageResource {
+            switch self {
+            case .Celsius: return .celsius
+            case .Fahrenheit: return .fahrenheitDegrees
+            }
+        }
+    }
+    @State private var selectTemp: TempType = .Celsius
+    
     var body: some View {
-        Menu("", systemImage: "square.and.arrow.down.fill") {
-            Button("목록편집") {
+        Menu("", systemImage: "ellipsis.circle") {
+            Button("목록 편집", systemImage: "pencil") {
                 print("목록편집")
             }
-            Button("알림") {
+            Button("알림", systemImage: "bell.badge") {
                 print("알림")
             }
-            Button("섭씨") {
-                print("섭씨")
+            Divider()
+            Picker(selection: $selectTemp) {
+                ForEach(TempType.allCases) { type in
+                    Button("\(type.rawValue)", image: type.image, action: { 
+                        self.selectTemp = type
+                    })
+                }
+            } label: {
+                Text("온도 선택")
             }
-            Button("화씨") {
-                print("화씨")
-            }
-            Button("단위") {
+
+//            Button("섭씨", image: .celsius) {
+//                print("섭씨")
+//            }
+//            Button("화씨", image: .fahrenheitDegrees) {
+//                print("화씨")
+//            }
+            Divider()
+            Button("단위", systemImage: "chart.bar") {
                 print("단위")
             }
-            Button("문제 리포트") {
+            Divider()
+            Button("문제 리포트", systemImage: "exclamationmark.bubble") {
                 print("문제리포트")
             }
         }
-        .background(.black)
+        .tint(.white)
+        .preferredColorScheme(.dark)
     }
 }
