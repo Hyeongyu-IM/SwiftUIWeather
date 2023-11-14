@@ -41,13 +41,6 @@ struct WeatherSettingMenuButton: View {
             } label: {
                 Text("온도 선택")
             }
-
-//            Button("섭씨", image: .celsius) {
-//                print("섭씨")
-//            }
-//            Button("화씨", image: .fahrenheitDegrees) {
-//                print("화씨")
-//            }
             Divider()
             Button("단위", systemImage: "chart.bar") {
                 print("단위")

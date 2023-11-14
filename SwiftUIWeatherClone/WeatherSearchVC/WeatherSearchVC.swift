@@ -27,6 +27,7 @@ struct WeatherSearchVC: View {
                 }
         }
         .searchable(text: $searchText, prompt: "도시 또는 공항 검색")
+        WeatherListItem()
     }
 }
 
