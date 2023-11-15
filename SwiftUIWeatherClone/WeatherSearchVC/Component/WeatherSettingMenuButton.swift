@@ -23,10 +23,13 @@ struct WeatherSettingMenuButton: View {
     }
     @State private var selectTemp: TempType = .Celsius
     
+    var editButtonTap: (() -> ())?
+    
     var body: some View {
         Menu("", systemImage: "ellipsis.circle") {
             Button("목록 편집", systemImage: "pencil") {
                 print("목록편집")
+                editButtonTap?()
             }
             Button("알림", systemImage: "bell.badge") {
                 print("알림")
@@ -52,5 +55,11 @@ struct WeatherSettingMenuButton: View {
         }
         .tint(.white)
         .preferredColorScheme(.dark)
+    }
+}
+
+extension WeatherSettingMenuButton {
+    func onEditButtonTap(action: @escaping (() -> Void)) -> WeatherSettingMenuButton {
+        WeatherSettingMenuButton(editButtonTap: action)
     }
 }

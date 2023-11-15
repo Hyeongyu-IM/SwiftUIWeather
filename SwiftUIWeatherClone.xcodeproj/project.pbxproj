@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C04FB432AFD3278006CD1FA /* WeatherSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C04FB422AFD3278006CD1FA /* WeatherSearchVC.swift */; };
 		2C04FB462AFD37D2006CD1FA /* WeatherSettingMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C04FB452AFD37D2006CD1FA /* WeatherSettingMenuButton.swift */; };
+		2C2FACF62B0515840020B0D6 /* WeatherEditListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FACF52B0515840020B0D6 /* WeatherEditListItem.swift */; };
 		2C54C62A2AE7EE9100DBC617 /* SwiftUIWeatherCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54C6292AE7EE9100DBC617 /* SwiftUIWeatherCloneApp.swift */; };
 		2C54C62C2AE7EE9100DBC617 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54C62B2AE7EE9100DBC617 /* ContentView.swift */; };
 		2C54C62E2AE7EE9200DBC617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C54C62D2AE7EE9200DBC617 /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		2C04FB422AFD3278006CD1FA /* WeatherSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSearchVC.swift; sourceTree = "<group>"; };
 		2C04FB452AFD37D2006CD1FA /* WeatherSettingMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSettingMenuButton.swift; sourceTree = "<group>"; };
+		2C2FACF52B0515840020B0D6 /* WeatherEditListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherEditListItem.swift; sourceTree = "<group>"; };
 		2C54C6262AE7EE9100DBC617 /* SwiftUIWeatherClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIWeatherClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C54C6292AE7EE9100DBC617 /* SwiftUIWeatherCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIWeatherCloneApp.swift; sourceTree = "<group>"; };
 		2C54C62B2AE7EE9100DBC617 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			children = (
 				2C04FB452AFD37D2006CD1FA /* WeatherSettingMenuButton.swift */,
 				2C5D636E2B0269C80012D4E6 /* WeatherListItem.swift */,
+				2C2FACF52B0515840020B0D6 /* WeatherEditListItem.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C5D636F2B0269C80012D4E6 /* WeatherListItem.swift in Sources */,
+				2C2FACF62B0515840020B0D6 /* WeatherEditListItem.swift in Sources */,
 				2C04FB462AFD37D2006CD1FA /* WeatherSettingMenuButton.swift in Sources */,
 				2C54C62C2AE7EE9100DBC617 /* ContentView.swift in Sources */,
 				2C54C62A2AE7EE9100DBC617 /* SwiftUIWeatherCloneApp.swift in Sources */,
