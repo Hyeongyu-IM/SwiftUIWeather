@@ -13,9 +13,9 @@ struct WeatherListItem: View {
         case edit
     }
     
-    @State var viewState: EditMode = .inactive
+    @ObservedObject var viewState: EditModeState
     
-    init(viewState: EditMode = .inactive) {
+    init(viewState: EditModeState) {
         self.viewState = viewState
     }
     
@@ -25,7 +25,7 @@ struct WeatherListItem: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: .infinity,
-                       height: viewState == .inactive ? 105 : 80,
+                       height: viewState.editMode == .inactive ? 105 : 60,
                        alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .clipped()
@@ -47,7 +47,7 @@ struct WeatherListItem: View {
                         .fontWeight(.light)
                         .foregroundStyle(.white)
                 })
-                if viewState == .inactive {
+                if viewState.editMode == .inactive {
                     Spacer()
                         
                     HStack(content: {
@@ -63,13 +63,9 @@ struct WeatherListItem: View {
             })
             .padding(.init(top: 5, leading: 15, bottom: 5, trailing: 15))
             .frame(width: .infinity,
-                   height: viewState == .inactive ? 105 : 80,
+                   height: viewState.editMode == .inactive ? 105 : 60,
                    alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         })
-        .animation(.snappy(duration: 0.5, extraBounce: 0), value: viewState == .inactive)
+        .animation(.snappy(duration: 0.5, extraBounce: 0), value: viewState.editMode == .inactive)
     }
-}
-
-#Preview {
-    WeatherListItem()
 }

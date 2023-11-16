@@ -7,80 +7,56 @@
 
 import SwiftUI
 
+class EditModeState: ObservableObject {
+    @Published var editMode: EditMode = .inactive
+    
+    init(editMode: EditMode = .inactive) {
+        self.editMode = editMode
+    }
+}
+
 struct WeatherSearchVC: View {
     @State private var mockCityList: [String] = ["나의 위치", "서울특별시", "서울", "런던", "용산구", "나의 위치", "서울특별시", "서울", "런던", "용산구"]
     @State private var searchText = ""
-    @State private var editMode: EditMode = .inactive
-    
     @State private var animating: Bool = false
+    
+    @ObservedObject var editMode = EditModeState()
     
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
     }
+    
+    let screenWidth = UIScreen.main.bounds.width
     
     var body: some View {
         VStack(content: {
             NavigationView {
                 List {
                     ForEach(mockCityList, id: \.self) { item in
-                        ZStack(content: {
-                            Image(.imgNight)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: .infinity,
-                                       height: editMode == .inactive ? 105 : 60,
-                                       alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .clipped()
-                            VStack(content: {
-                                HStack(content: {
-                                    VStack(alignment: .leading, content: {
-                                        Text("나의 위치")
-                                            .font(.system(size: 20))
-                                            .bold()
-                                            .foregroundStyle(.white)
-                                        Text("서울특별시")
-                                            .font(.system(size: 15))
-                                            .bold()
-                                            .foregroundStyle(.white)
-                                    })
-                                    Spacer()
-                                    Text("7º")
-                                        .font(.system(size: 45))
-                                        .fontWeight(.light)
-                                        .foregroundStyle(.white)
-                                })
-                                if editMode == .inactive {
-                                    Spacer()
-                                        
-                                    HStack(content: {
-                                        Text("대체로 흐림")
-                                            .font(.system(size: 15))
-                                            .foregroundStyle(.white)
-                                        Spacer()
-                                        Text("최고:10º 최저:-2º")
-                                            .font(.system(size: 15))
-                                            .foregroundStyle(.white)
-                                    })
-                                }
+                        WeatherListItem(viewState: editMode)
+                            .onDrag({
+                                return .init()
+                            }, preview: {
+                                WeatherListItem(viewState: editMode)
+                                    .frame(minWidth: editMode.editMode == .active 
+                                           ? (screenWidth - 110)
+                                           : (screenWidth - 30),
+                                           minHeight: editMode.editMode == .active
+                                           ? 60 : 105)
+                                    .contentShape(.dragPreview, RoundedRectangle(cornerRadius: 15, style: .continuous))
                             })
-                            .padding(.init(top: 5, leading: 15, bottom: 5, trailing: 15))
-                            .frame(width: .infinity,
-                                   height: editMode == .inactive ? 105 : 60,
-                                   alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        })
                     }
                     .onDelete(perform: delete)
                     .onMove(perform: moveFriut)
                     .listRowSeparator(.hidden)
                 }
                 .listRowSpacing(-10)
-                .environment(\.editMode, $editMode)
+                .environment(\.editMode, $editMode.editMode)
                 .navigationTitle("날씨")
                 .navigationBarTitleDisplayMode(.large)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        WeatherSettingMenuButton()
+                        WeatherSettingMenuButton(editMode: editMode)
                             .onEditButtonTap {
                                 editButtonTab()
                             }
@@ -88,7 +64,7 @@ struct WeatherSearchVC: View {
                 }
                 .listStyle(.plain)
                 .padding(.init(top: -10, leading: 0, bottom: 0, trailing: 0))
-                .animation(.snappy(duration: 0.4, extraBounce: 0), value: editMode == .inactive)
+                .animation(.snappy(duration: 0.4, extraBounce: 0), value: editMode.editMode == .inactive)
             }
             .searchable(text: $searchText,
                         placement: .navigationBarDrawer(displayMode: .always),
@@ -104,7 +80,7 @@ struct WeatherSearchVC: View {
     }
     func editButtonTab() {
         animating.toggle()
-        editMode = editMode == .active ? .inactive : .active
+        editMode.editMode = editMode.editMode == .active ? .inactive : .active
         
     }
 }

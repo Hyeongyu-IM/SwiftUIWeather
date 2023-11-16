@@ -22,44 +22,59 @@ struct WeatherSettingMenuButton: View {
         }
     }
     @State private var selectTemp: TempType = .Celsius
+    @ObservedObject private var editMode: EditModeState
     
     var editButtonTap: (() -> ())?
+
+    init(editMode: EditModeState, selectTemp: TempType = .Celsius,
+         editButtonTap: (() -> ())? = nil) {
+        self.selectTemp = selectTemp
+        self.editMode = editMode
+        self.editButtonTap = editButtonTap
+    }
     
     var body: some View {
-        Menu("", systemImage: "ellipsis.circle") {
-            Button("목록 편집", systemImage: "pencil") {
-                print("목록편집")
-                editButtonTap?()
-            }
-            Button("알림", systemImage: "bell.badge") {
-                print("알림")
-            }
-            Divider()
-            Picker(selection: $selectTemp) {
-                ForEach(TempType.allCases) { type in
-                    Button("\(type.rawValue)", image: type.image, action: { 
-                        self.selectTemp = type
-                    })
+        if editMode.editMode == .inactive {
+            Menu("", systemImage: "ellipsis.circle") {
+                Button("목록 편집", systemImage: "pencil") {
+                    print("목록편집")
+                    editButtonTap?()
                 }
-            } label: {
-                Text("온도 선택")
+                Button("알림", systemImage: "bell.badge") {
+                    print("알림")
+                }
+                Divider()
+                Picker(selection: $selectTemp) {
+                    ForEach(TempType.allCases) { type in
+                        Button("\(type.rawValue)", image: type.image, action: {
+                            self.selectTemp = type
+                        })
+                    }
+                } label: {
+                    Text("온도 선택")
+                }
+                Divider()
+                Button("단위", systemImage: "chart.bar") {
+                    print("단위")
+                }
+                Divider()
+                Button("문제 리포트", systemImage: "exclamationmark.bubble") {
+                    print("문제리포트")
+                }
             }
-            Divider()
-            Button("단위", systemImage: "chart.bar") {
-                print("단위")
-            }
-            Divider()
-            Button("문제 리포트", systemImage: "exclamationmark.bubble") {
-                print("문제리포트")
-            }
+            .tint(.white)
+            .preferredColorScheme(.dark)
+        } else {
+            Button("완료", action: {
+                editButtonTap?()
+            })
+            .tint(.white)
         }
-        .tint(.white)
-        .preferredColorScheme(.dark)
     }
 }
 
 extension WeatherSettingMenuButton {
     func onEditButtonTap(action: @escaping (() -> Void)) -> WeatherSettingMenuButton {
-        WeatherSettingMenuButton(editButtonTap: action)
+        WeatherSettingMenuButton(editMode: self.editMode, selectTemp: self.selectTemp, editButtonTap: action)
     }
 }
